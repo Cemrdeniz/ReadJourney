@@ -4,9 +4,16 @@ import {
   signupUserApi,
   signinUserApi,
   currentUserApi,
-  signoutUserApi
+  signoutUserApi,
+  clearToken
 } from '@/services/api'
 import toast from '@/utils/toast'
+
+const getErrorMessage = (error) =>
+  error?.response?.data?.message ||
+  error?.response?.data?.error ||
+  error?.message ||
+  'Something went wrong'
 
 const initialState = {
   name: null,
@@ -44,8 +51,9 @@ export const useAuthStore = create()(
 
             toast('success', 'Signup successful!')
           } catch (error) {
-            set({ error: error.message })
-            toast('error', error.message)
+            const message = getErrorMessage(error)
+            set({ error: message })
+            toast('error', message)
           } finally {
             set({ isLoading: false })
           }
@@ -71,8 +79,9 @@ export const useAuthStore = create()(
 
             toast('success', 'Login successful!')
           } catch (error) {
-            set({ error: error.message })
-            toast('error', error.message)
+            const message = getErrorMessage(error)
+            set({ error: message })
+            toast('error', message)
           } finally {
             set({ isLoading: false })
           }
@@ -91,8 +100,19 @@ export const useAuthStore = create()(
               })
             }
           } catch (error) {
-            set({ error: error.message })
+            if (error?.response?.status === 401) {
+              clearToken()
+              set(initialState)
+              return
+            }
+
+            set({ error: getErrorMessage(error) })
           }
+        },
+
+        resetAuth: () => {
+          clearToken()
+          set(initialState)
         },
 
         // 🚪 SIGNOUT
@@ -104,8 +124,9 @@ export const useAuthStore = create()(
 
             toast('success', 'Sign-out successful')
           } catch (error) {
-            set({ error: error.message })
-            toast('error', 'Logout failed')
+            const message = getErrorMessage(error)
+            set({ error: message })
+            toast('error', message)
           }
         }
       }),

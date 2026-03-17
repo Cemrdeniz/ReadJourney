@@ -1,5 +1,12 @@
 import { create } from 'zustand'
 import { getRecommendedApi } from '@/services/api'
+import { useAuthStore } from '@/stores/authStore'
+
+const getErrorMessage = (error) =>
+  error?.response?.data?.message ||
+  error?.response?.data?.error ||
+  error?.message ||
+  'Failed to load recommended books'
 
 export const useRecommendedStore = create((set) => ({
   books: [],
@@ -28,7 +35,15 @@ export const useRecommendedStore = create((set) => ({
 
     } catch (error) {
       console.error('GET RECOMMENDED ERROR:', error)
-      set({ error: error?.response?.data })
+
+      if (error?.response?.status === 401) {
+        useAuthStore.getState().resetAuth()
+      }
+
+      set({
+        error: getErrorMessage(error),
+        books: []
+      })
     } finally {
       set({ isLoading: false })
     }

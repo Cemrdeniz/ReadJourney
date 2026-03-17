@@ -8,6 +8,12 @@ import {
 
 const getToken = () => localStorage.getItem('token')
 
+const getErrorMessage = (error) =>
+  error?.response?.data?.message ||
+  error?.response?.data?.error ||
+  error?.message ||
+  'Something went wrong'
+
 export const useLibraryStore = create((set) => ({
   books: [],
   isLoading: false,
@@ -29,7 +35,7 @@ export const useLibraryStore = create((set) => ({
       })
 
     } catch (error) {
-      set({ error: error?.response?.data })
+      set({ error: getErrorMessage(error) })
     }
   },
 
@@ -54,7 +60,7 @@ export const useLibraryStore = create((set) => ({
 
     } catch (error) {
       console.error('ADD BOOK ERROR:', error)
-      set({ error: error?.response?.data })
+      set({ error: getErrorMessage(error) })
     } finally {
       set({ isLoading: false })
     }
@@ -79,7 +85,7 @@ export const useLibraryStore = create((set) => ({
       })
 
     } catch (error) {
-      set({ error: error?.response?.data })
+      set({ error: getErrorMessage(error) })
     } finally {
       set({ isLoading: false })
     }
@@ -104,7 +110,7 @@ export const useLibraryStore = create((set) => ({
       })
 
     } catch (error) {
-      set({ error: error?.response?.data })
+      set({ error: getErrorMessage(error) })
     } finally {
       set({ isLoading: false })
     }
