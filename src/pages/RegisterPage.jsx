@@ -7,16 +7,7 @@ function RegisterPage() {
   const error = useAuthStore(state => state.error)
 
   const createErrorMessage = error => {
-    if (`${error}` === 'auth/too-many-requests') {
-      toast('error', 'Too many requests.')
-    } else if (`${error}` === 'auth/network-request-failed') {
-      toast('error', 'Problem with network')
-    } else if (`${error}` === 'auth/email-already-in-use') {
-      toast('error', 'Email already exists')
-    } else {
-      console.log(error)
-    }
-    return error
+    toast('error', `${error}`)
   }
 
   useEffect(() => {
