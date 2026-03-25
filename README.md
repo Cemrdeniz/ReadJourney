@@ -33,42 +33,7 @@ Read Journey is a responsive book tracking app built with React and Chakra UI. I
 - `src/hooks` - custom hooks
 - `src/assets` - icons and images
 
-## Getting Started
 
-### Prerequisites
-
-- Node.js 18+ recommended
-- npm
-
-### Install dependencies
-
-```bash
-npm install
-```
-
-### Run the app locally
-
-```bash
-npm run dev
-```
-
-### Build for production
-
-```bash
-npm run build
-```
-
-### Preview the production build
-
-```bash
-npm run preview
-```
-
-### Run lint
-
-```bash
-npm run lint
-```
 
 ## Pages
 
