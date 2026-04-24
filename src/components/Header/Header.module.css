@@ -1,0 +1,61 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  border-bottom: 1px solid #ddd;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: black;
+}
+
+.active {
+  color: #4cafef;
+  border-bottom: 2px solid #4cafef;
+}
+
+.user {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.burger {
+  display: none;
+  font-size: 22px;
+  background: none;
+  border: none;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: white;
+  }
+
+  .navOpen {
+    display: flex;
+  }
+
+  .burger {
+    display: block;
+  }
+}
